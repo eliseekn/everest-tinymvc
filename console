@@ -1,0 +1,20 @@
+#!/usr/bin/env/php 
+
+<?php
+
+/**
+ * @copyright 2021 - N'Guessan Kouadio Elisée (eliseekn@gmail.com)
+ * @license MIT (https://opensource.org/licenses/MIT)
+ * @link https://github.com/eliseekn/tinymvc
+ */
+
+/**
+ * Application command line interface
+ */
+
+require 'vendor/autoload.php';
+require_once 'bootstrap.php';
+
+$console = new \Symfony\Component\Console\Application();
+$console->addCommands(array_merge(config('console.core'), config('console.app')));
+$console->run();

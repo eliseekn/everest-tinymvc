@@ -1,0 +1,23 @@
+@mixin transition($attr, $time, $type) {
+    transition: $attr $time $type;
+    -webkit-transition: $attr $time $type;
+    -moz-transition: $attr $time $type;
+    -o-transition: $attr $time $type;
+}
+
+@mixin fadeIn($time) {
+    animation: fadeIn $time;
+    -webkit-animation: fadeIn $time;
+    -moz-animation: fadeIn $time;
+    -o-animation: fadeIn $time;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

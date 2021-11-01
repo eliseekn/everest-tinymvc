@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @copyright 2021 - N'Guessan Kouadio Elisée (eliseekn@gmail.com)
+ * @license MIT (https://opensource.org/licenses/MIT)
+ * @link https://github.com/eliseekn/tinymvc
+ */
+
+use PHPUnit\Framework\TestCase;
+use Core\Testing\Concerns\RefreshDatabase;
+
+class CLASSNAME extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_example_test_name()
+    {
+        //
+    }
+}

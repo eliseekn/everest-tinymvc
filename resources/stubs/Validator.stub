@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @copyright 2021 - N'Guessan Kouadio Elisée (eliseekn@gmail.com)
+ * @license MIT (https://opensource.org/licenses/MIT)
+ * @link https://github.com/eliseekn/tinymvc
+ */
+
+namespace NAMESPACE;
+
+use Core\Http\Validator\GUMPValidator;
+
+class CLASSNAME extends GUMPValidator
+{
+    /**
+     * Validation rules
+     */
+    protected static array $rules = [
+        //
+    ];
+
+    /**
+     * Custom errors messages
+     */
+    protected static array $messages = [
+        //
+    ];
+
+    /**
+     * Make validator
+     */
+    public static function make(array $inputs)
+    {
+        self::add('name', function($field, array $input, array $params, $value) {
+            return true;
+        }, '{field}');
+
+        return self::validate($inputs, static::$rules, static::$messages);
+    }
+}
