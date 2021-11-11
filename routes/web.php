@@ -6,8 +6,9 @@
  * @link https://github.com/eliseekn/tinymvc
  */
 
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use Core\Routing\Route;
+use App\Http\Controllers\PostController;
 
 /**
  * Web routes
@@ -18,5 +19,11 @@ Route::view('/', 'index')->register();
 Route::groupMiddlewares(['auth', 'csrf'], function () {
     Route::post('post', [PostController::class, 'store'])->name('post.store');
     Route::patch('post/{id:num}', [PostController::class, 'update'])->name('post.update');
-    Route::delete('post/{id:num}', [PostController::class, 'delete'])->name('post.delete');
+    Route::get('post', PostController::class)->name('post.index')->middlewares('auth');
+    Route::delete('post/{id:num}', [PostController::class, 'delete'])->name('post.delete')->middlewares('auth');
 })->register();
+
+Route::post('comment/{post_id:num}', [CommentController::class, 'store'])
+    ->name('comment.store')
+    ->middlewares('csrf')
+    ->register();

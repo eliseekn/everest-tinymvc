@@ -6,11 +6,11 @@
  * @link https://github.com/eliseekn/tinymvc
  */
 
-namespace App\Http\Validators\Post;
+namespace App\Http\Validators;
 
 use Core\Http\Validator\GUMPValidator;
 
-class StoreValidator extends GUMPValidator
+class StorePostValidator extends GUMPValidator
 {
     /**
      * Validation rules

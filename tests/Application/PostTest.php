@@ -77,12 +77,13 @@ class PostTest extends ApplicationTestCase
 
         $this->actingAs($user)->post('post', $post->toArray());
 
-        $client = $this->actingAs($user)->delete("post/{$post->id}");
+        $post = Post::findBy('title', $post->title);
 
-        $client->dumpHeaders();
+        $client = $this->actingAs($user)->delete("post/{$post->id}");
 
         $client->assertSessionDoesNotHaveErrors();
 
         $this->assertDatabaseDoesNotHave('posts', $post->toArray('title', 'slug', 'content'));
+        $this->assertFileDoesNotExist(Storage::path(config('storage.uploads'))->file($post->image));
     }
 }

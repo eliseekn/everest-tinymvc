@@ -12,21 +12,20 @@ use Core\Database\Migration;
 
 class PostsTable_20211031163156
 {         
-    protected $table = 'posts';
-
     public function create()
     {
-        Migration::createTable($this->table)
+        Migration::createTable('posts')
             ->addPrimaryKey('id')
             ->addString('title')
             ->addString('slug')
             ->addText('content')
             ->addString('image')
+            ->addCurrentTimestamp()
             ->migrate();
     }
     
     public function drop()
     {
-        Migration::dropTable($this->table);
+        Migration::dropTable('posts');
     }
 }

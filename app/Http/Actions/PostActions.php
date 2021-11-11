@@ -46,6 +46,9 @@ class PostActions
     public static function delete(int $id)
 	{
         $post = Post::find($id);
+
+        Storage::path(config('storage.uploads'))->deleteFile($post->image);
+
         return $post->delete();
 	}
 }
