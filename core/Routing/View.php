@@ -15,6 +15,7 @@ use Core\Support\Storage;
 use Twig\Loader\FilesystemLoader;
 use Core\Support\TwigExtensions;
 use Twig\Extension\DebugExtension;
+use Twig\Extra\String\StringExtension;
 
 /**
  * Manage views templates
@@ -43,6 +44,7 @@ class View
         ]);
 
         $twig->addExtension(new TwigExtensions());
+        $twig->addExtension(new StringExtension());
         
         if (config('twig.debug')) $twig->addExtension(new DebugExtension());
 

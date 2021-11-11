@@ -7,6 +7,7 @@
  */
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HomeController;
 use Core\Routing\Route;
 use App\Http\Controllers\PostController;
 
@@ -14,7 +15,7 @@ use App\Http\Controllers\PostController;
  * Web routes
  */
 
-Route::view('/', 'index')->register();
+Route::get('/', HomeController::class)->register();
 
 Route::groupMiddlewares(['auth', 'csrf'], function () {
     Route::post('post', [PostController::class, 'store'])->name('post.store');

@@ -1,0 +1,61 @@
+{% apply spaceless %}
+<!DOCTYPE html>
+<html lang="{{ config('app.lang') }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {{ csrf_token_meta()|raw }}
+
+        <link rel="stylesheet" href="{{ resources('vendor/bootstrap-5.1.1-dist/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ assets('css/style.css') }}">
+        
+        {% block styles %}{% endblock %}
+    
+        <meta name="description" content="{% block description %}Le blog de l'Everest{% endblock %}">
+        <title>{% block title %}Le blog de l'Everest{% endblock %}</title>
+    </head>
+
+    <body>
+        {% if alert is not empty %}
+            {% include "partials/alert.html.twig" with {alert: alert} %}
+        {% endif %}
+
+        <header class="d-flex flex-column align-items-center text-white">
+            <h1 class="display-3 mb-4">Le blog de l'Everest</h1>
+            <h3>Mountain, Snow, Mountaineering, Everest</h3>
+        </header>
+
+        {% block body %}{% endblock %}
+
+        <footer class="d-flex flex-column align-items-center text-white">
+            <h1 class="display-3 mb-4">Le blog de l'Everest</h1>
+
+            <ul class="social-icons">
+                <a href="#" class="text-white">
+                    <i class="fab fa-facebook-square"></i>
+                </a>
+
+                <a href="#" class="text-white mx-3">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a href="#" class="text-white me-3">
+                    <i class="fab fa-pinterest-square"></i>
+                </a>
+                
+                <a href="#" class="text-white">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </ul>
+        </footer>
+
+        <script defer src="{{ resources('vendor/fontawesome-5.13-all.js') }}"></script>
+        <script defer src="{{ resources('vendor/bootstrap-5.1.1-dist/bootstrap.bundle.min.js') }}"></script>
+        <script defer src="{{ assets('js/index.js') }}"></script>
+
+        {% block scripts %}{% endblock %}
+    </body>
+</html>
+{% endapply %}

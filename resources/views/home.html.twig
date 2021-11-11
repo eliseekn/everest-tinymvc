@@ -1,0 +1,49 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block body %}
+    <section class="container my-5">
+        <div class="row row-cols-2">
+            {% for post in posts.getItems()  %}
+            <article class="col mb-5">
+                <div class="card shadow-sm">
+                    <img src="{{ assets(post.image) }}" class="card-img-top" alt="Image de l'article">
+                    
+                    <div class="card-body">
+                        <h2 class="card-title post-title">{{ post.title }}</h2>
+                        <p class="card-text mt-3 text-justify">
+                            {{ post.content|u.truncate(290, '[...]') }}
+                        </p>
+                        <a href="{{ route('post.index', post.slug) }}" class="btn btn-dark read-more">Read more</a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <nav class="my-5">
+		<ul class="pagination justify-content-center">
+			{% if posts.hasLess() %}
+			<li class="page-item">
+				<a class="page-link text-dark" href="{{ posts.previousPageUrl() }}">
+					&laquo;
+				</a>
+			</li>
+			{% endif %}
+
+			{% if posts.totalPages() > 1 %}
+            <li class="page-item page-link text-dark">
+				Page {{ posts.currentPage() }}/{{ posts.totalPages() }}
+			</li>
+            {% endif %}
+			
+			{% if posts.hasMore() %}
+			<li class="page-item">
+				<a class="page-link text-dark" href="{{ posts.nextPageUrl() }}">
+					&raquo;
+				</a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+{% endblock %}
