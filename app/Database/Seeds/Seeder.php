@@ -18,6 +18,16 @@ class Seeder
 {
     public static function run()
     {
-        User::factory(UserFactory::class, 5)->create();
+        User::factory(UserFactory::class)->create([
+            'email' => 'admin@mail.com',
+            'password' => hash_pwd('admin'),
+            'role' => User::ROLE_ADMIN
+        ]);
+
+        User::factory(UserFactory::class)->create([
+            'email' => 'user@mail.com',
+            'password' => hash_pwd('user'),
+            'role' => User::ROLE_USER
+        ]);
     }
 }

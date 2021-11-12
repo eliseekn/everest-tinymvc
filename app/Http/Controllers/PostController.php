@@ -56,11 +56,21 @@ class PostController
         $response->redirect()->back()->go();
     }
 
-    public function show(Response $response, int $id)
+    public function show(Response $response, string $slug)
     {
-        $post = Post::find($id);
+        $post = Post::findBy('slug', $slug);
         $comments = Comment::where('post_id', $post->id)->getAll();
 
         $response->view('post.show', compact('posts', 'comments'));
+    }
+
+    public function create(Response $response)
+    {
+        $response->view('dashboard.posts.create');
+    }
+
+    public function edit(Response $response)
+    {
+        $response->view('dashboard.posts.edit');
     }
 }

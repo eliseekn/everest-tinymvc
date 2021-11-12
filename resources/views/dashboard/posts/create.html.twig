@@ -1,0 +1,46 @@
+{% extends "layouts/dashboard.html.twig" %}
+
+{% block title %}Dashboard | Create post{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-5">Create post</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_token_input()|raw }}
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" value="{{ inputs.title ?? '' }}" name="title" id="title" class="form-control {{ errors.title ? 'is-invalid' }}" aria-describedby="title-error" autofocus>
+                    
+                        {% if errors.title is not empty %}
+                        <div id="title-error" class="invalid-feedback">
+                            {{ errors.title|raw }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" name="image" id="image" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content</label>
+                        <textarea name="content" id="content" class="form-control {{ errors.content ? 'is-invalid' }}" aria-describedby="content-error">{{ inputs.content ?? '' }}</textarea>
+                    
+                        {% if errors.content is not empty %}
+                        <div id="content-error" class="invalid-feedback">
+                            {{ errors.content|raw }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-dark">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,14 +6,14 @@
             {% for post in posts.getItems()  %}
             <article class="col mb-5">
                 <div class="card shadow-sm">
-                    <img src="{{ assets(post.image) }}" class="card-img-top" alt="Image de l'article">
+                    <img src="{{ storage('uploads/' ~ post.image) }}" class="card-img-top" alt="Image de l'article">
                     
                     <div class="card-body">
                         <h2 class="card-title post-title">{{ post.title }}</h2>
                         <p class="card-text mt-3 text-justify">
                             {{ post.content|u.truncate(290, '[...]') }}
                         </p>
-                        <a href="{{ route('post.index', post.slug) }}" class="btn btn-dark read-more">Read more</a>
+                        <a href="{{ route('post.show', post.slug) }}" class="btn btn-dark read-more">Read more</a>
                     </div>
                 </div>
             </article>

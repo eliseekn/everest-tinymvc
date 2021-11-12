@@ -16,6 +16,7 @@ use Twig\Loader\FilesystemLoader;
 use Core\Support\TwigExtensions;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
+use Twig\Extra\Intl\IntlExtension;
 
 /**
  * Manage views templates
@@ -45,6 +46,7 @@ class View
 
         $twig->addExtension(new TwigExtensions());
         $twig->addExtension(new StringExtension());
+        $twig->addExtension(new IntlExtension());
         
         if (config('twig.debug')) $twig->addExtension(new DebugExtension());
 
