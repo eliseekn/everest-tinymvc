@@ -23,15 +23,19 @@ Route::groupMiddlewares(['auth', 'csrf'], function () {
     Route::patch('post/{id:num}', [PostController::class, 'update'])->name('post.update');
     Route::get('post', PostController::class)->name('post.index')->middlewares('auth');
     Route::delete('post/{id:num}', [PostController::class, 'delete'])->name('post.delete')->middlewares('auth');
-    Route::get('post/{id:num}', [PostController::class, 'show'])->name('post.show')->middlewares('auth');
+    Route::get('post/{slug:str}', [PostController::class, 'show'])->name('post.show')->middlewares('auth');
 
     Route::get('dashboard', DashboardController::class)->name('dashboard')->middlewares('auth');
-    Route::get('dashboard/comments', [DashboardController::class, 'comments'])->name('dashboard.comments')->middlewares('auth');
+    Route::get('dashboard/comments/{post_id:num}', [DashboardController::class, 'comments'])->name('dashboard.comments')->middlewares('auth');
     Route::get('dashboard/post/create', [PostController::class, 'create'])->name('dashboard.post.create')->middlewares('auth');
-    Route::get('dashboard/post/edit', [PostController::class, 'edit'])->name('dashboard.post.edit')->middlewares('auth');
+    Route::get('dashboard/post/edit/{id:num}', [PostController::class, 'edit'])->name('dashboard.post.edit')->middlewares('auth');
 })->register();
 
 Route::post('comment/{post_id:num}', [CommentController::class, 'store'])
     ->name('comment.store')
     ->middlewares('csrf')
+    ->register();
+
+Route::delete('comment/{id:num', [CommentController::class, 'delete'])
+    ->name('comment.delete')
     ->register();

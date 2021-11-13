@@ -28,7 +28,7 @@ class PostController
     public function store(Request $request, Response $response)
     {
         StorePostValidator::make($request->inputs())->redirectBackOnFail($response);
-        PostActions::create($request->only('title', 'content'), $request->getFiles('image'));
+        PostActions::create($request->only('title', 'content'), $request->getFiles('image', false, ['jpeg', 'jpg', 'png']));
 
         Alert::toast('Post has been created')->success();
         $response->redirect()->back()->go();
@@ -36,13 +36,17 @@ class PostController
 
     public function update(Request $request, Response $response, int $id)
     {
-        if ($request->has('title')) {
-            PostActions::update($request->only('title'), $id, $request->getFiles('image'));
+        $data = [];
+
+        if ($request->filled('title')) {
+            $data['title'] = $request->title;
         }
 
-        if ($request->has('content')) {
-            PostActions::update($request->only('content'), $id, $request->getFiles('image'));
+        if ($request->filled('content')) {
+            $data['content'] = $request->content;
         }
+
+        PostActions::update($data, $id, $request->getFiles('image', false, ['jpeg', 'jpg', 'png']));
 
         Alert::toast('Post has been updated')->success();
         $response->redirect()->back()->go();
@@ -59,9 +63,9 @@ class PostController
     public function show(Response $response, string $slug)
     {
         $post = Post::findBy('slug', $slug);
-        $comments = Comment::where('post_id', $post->id)->getAll();
+        $comments = $post->has('comments')->getAll();
 
-        $response->view('post.show', compact('posts', 'comments'));
+        $response->view('post', compact('post', 'comments'));
     }
 
     public function create(Response $response)
@@ -69,8 +73,10 @@ class PostController
         $response->view('dashboard.posts.create');
     }
 
-    public function edit(Response $response)
+    public function edit(Response $response, int $id)
     {
-        $response->view('dashboard.posts.edit');
+        $post = Post::find($id);
+
+        $response->view('dashboard.posts.edit', compact('post'));
     }
 }

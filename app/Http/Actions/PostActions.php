@@ -28,8 +28,10 @@ class PostActions
 	{
         $post = Post::find($id);
 
-        if (!is_null($uploader)) {
-            Storage::path(config('storage.uploads'))->deleteFile($post->image);
+        if (is_null($uploader) || $uploader->isUploaded()) {
+            if (Storage::path(config('storage.uploads'))->isFile($post->image)) {
+                Storage::path(config('storage.uploads'))->deleteFile($post->image);
+            }
 
             $uploader->save();
             $data['image'] = $uploader->filename;
@@ -47,7 +49,9 @@ class PostActions
 	{
         $post = Post::find($id);
 
-        Storage::path(config('storage.uploads'))->deleteFile($post->image);
+        if (Storage::path(config('storage.uploads'))->isFile($post->image)) {
+            Storage::path(config('storage.uploads'))->deleteFile($post->image);
+        }
 
         return $post->delete();
 	}

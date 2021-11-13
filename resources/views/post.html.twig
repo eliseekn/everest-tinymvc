@@ -1,0 +1,59 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %} {{ post.title }} | Le blog de l'Everest {% endblock %}
+{% block description %} {{ post.title }} {% endblock %}
+
+{% block body %}
+    <section class="container w-50 my-5">
+        <article class="card mb-5">
+            <img src="{{ storage('uploads/' ~ post.image) }}" class="card-img-top" alt="Image de l'article">
+            
+            <div class="card-body">
+                <h2 class="card-title post-title">{{ post.title }}</h2>
+                <p class="card-text mt-3 text-justify">{{ post.content }}</p>
+                <a href="{{ url('/') }}" class="btn btn-dark">Go back home</a>
+            </div>
+        </article>
+
+        <h3 class="mt-5">Comments ({{ comments|length }})</h3>
+
+        <div class="mt-3">
+            {% for comment in comments %}
+            <p class="fw-bold">{{ comment.author }}</p>
+            <p class="fst-italic">{{ comment.content }}</p>
+            {% endfor %}
+        </div>
+
+        <h4 class="mt-5">Leave a comment</h4>
+
+        <div class="mt-3">
+            <form action="{{ route('comment.store', post.id) }}" method="post">
+                {{ csrf_token_input()|raw }}
+
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="email" value="{{ inputs.author ?? '' }}" name="author" id="author" class="form-control {{ errors.author ? 'is-invalid' }}" aria-describedby="author-error">
+
+                    {% if errors.author is not empty %}
+                    <div id="author-error" class="invalid-feedback">
+                        {{ errors.author|raw }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea name="content" id="content" class="form-control {{ errors.content ? 'is-invalid' }}" aria-describedby="content-error">{{ inputs.content ?? '' }}</textarea>
+
+                    {% if errors.content is not empty %}
+                    <div id="content-error" class="invalid-feedback">
+                        {{ errors.content|raw }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-dark">Save</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

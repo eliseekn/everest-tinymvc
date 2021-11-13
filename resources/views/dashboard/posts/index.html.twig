@@ -9,12 +9,6 @@
             <a href="{{ route('dashboard.post.create') }}" class="btn btn-dark" target="_blank">Create post</a>
         </div>
 
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-                
         <table class="table">
             <thead>
                 <tr>
@@ -43,9 +37,14 @@
                             <a href="{{ route('dashboard.post.edit', post.id) }}" class="mx-3" title="Edit" target="_blank">
                                 <i class="fa fa-edit text-primary"></i>
                             </a>
-                            <a href="{{ route('post.delete', post.id) }}" title="Delete">
-                                <i class="fa fa-trash text-danger"></i>
-                            </a>
+                            
+                            <form method="post" action="{{ route('post.delete', post.id) }}">
+                                {{ method_input('delete')|raw }}
+
+                                <button type="submit" title="Delete" class="btn px-0">
+                                    <i class="fa fa-trash text-danger"></i>
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>

@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Database\Models\Comment;
 use Core\Http\Request;
 use Core\Support\Alert;
 use Core\Http\Response\Response;
@@ -17,13 +16,6 @@ use App\Http\Validators\StoreCommentValidator;
 
 class CommentController
 {
-    public function __invoke(Response $response)
-	{
-        $comments = Comment::select('*')->paginate(5);
-
-        $response->view('comment.index', compact('comments'));
-	}
-
     public function store(Request $request, Response $response, int $post_id)
     {
         StoreCommentValidator::make($request->inputs())->redirectBackOnFail($response);

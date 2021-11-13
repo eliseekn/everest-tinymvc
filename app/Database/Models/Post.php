@@ -18,4 +18,9 @@ class Post extends Model
     {
         parent::__construct(static::$table);
     }
+
+    public function comments()
+    {
+        return $this->has('comments')->getAll();
+    }
 }
